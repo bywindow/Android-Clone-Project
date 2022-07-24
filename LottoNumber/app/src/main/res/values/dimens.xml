@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_button_margin">16dp</dimen>
+    <dimen name="picked_item_top_margin">30dp</dimen>
+</resources>

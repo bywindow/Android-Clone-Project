@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LottoNumber</string>
+    <string name="add_number_text">번호 추가하기</string>
+    <string name="clear_button_text">초기화</string>
 </resources>
