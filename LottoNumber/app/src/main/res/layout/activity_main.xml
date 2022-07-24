@@ -54,6 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
 
         <TextView
@@ -61,6 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
 
         <TextView
@@ -68,6 +72,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
 
         <TextView
@@ -75,6 +81,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
 
         <TextView
@@ -82,6 +90,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
+
+        <TextView
+            android:id="@+id/sixthNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
 
     </LinearLayout>
@@ -93,6 +112,7 @@
         android:layout_marginEnd="@dimen/default_button_margin"
         android:layout_marginBottom="@dimen/default_button_margin"
         android:layout_marginStart="@dimen/default_button_margin"
+        android:text="@string/run_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
