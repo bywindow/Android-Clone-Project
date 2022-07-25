@@ -54,15 +54,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
+            android:background="@drawable/circle_blue"
+            android:gravity="center"
             android:visibility="gone"
             tools:visibility="visible"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textColor="@color/white"/>
 
         <TextView
             android:id="@+id/secondNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
+            android:background="@drawable/circle_yellow"
+            android:gravity="center"
+            android:textColor="@color/white"
             android:visibility="gone"
             tools:visibility="visible"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
@@ -72,6 +78,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
+            android:background="@drawable/circle_red"
+            android:gravity="center"
+            android:textColor="@color/white"
             android:visibility="gone"
             tools:visibility="visible"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
@@ -81,6 +90,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
+            android:background="@drawable/circle_gray"
+            android:gravity="center"
+            android:textColor="@color/white"
             android:visibility="gone"
             tools:visibility="visible"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
@@ -90,6 +102,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
+            android:background="@drawable/circle_green"
+            android:gravity="center"
+            android:textColor="@color/white"
             android:visibility="gone"
             tools:visibility="visible"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
@@ -99,6 +114,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
+            android:background="@drawable/circle_blue"
+            android:gravity="center"
+            android:textColor="@color/white"
             android:visibility="gone"
             tools:visibility="visible"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
