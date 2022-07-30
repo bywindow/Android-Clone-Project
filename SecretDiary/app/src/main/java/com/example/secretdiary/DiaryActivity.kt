@@ -13,7 +13,7 @@ import androidx.core.widget.addTextChangedListener
 
 class DiaryActivity: AppCompatActivity() {
 
-    private val handler = Handler(Looper.getMainLooper())
+    private val handler = Handler(Looper.getMainLooper()) //매인쓰레드에 연결된 핸들러
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
