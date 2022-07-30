@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="number_picker_width">30dp</dimen>
+    <dimen name="number_picker_height">120dp</dimen>
+    <dimen name="open_button_width">40dp</dimen>
+    <dimen name="open_button_height">60dp</dimen>
+    <dimen name="chagne_button_width">10dp</dimen>
+</resources>
