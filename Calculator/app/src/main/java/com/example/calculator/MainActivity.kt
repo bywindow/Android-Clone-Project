@@ -13,9 +13,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.room.Room
 import com.example.calculator.model.History
-import java.lang.NumberFormatException
 import java.lang.RuntimeException
-import kotlin.math.exp
 
 class MainActivity : AppCompatActivity() {
 
