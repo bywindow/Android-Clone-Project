@@ -8,6 +8,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import java.lang.NumberFormatException
 import java.lang.RuntimeException
 import kotlin.math.exp
@@ -19,6 +20,14 @@ class MainActivity : AppCompatActivity() {
     }
     private val resultTextView: TextView by lazy {
         findViewById<TextView>(R.id.resultTextView)
+    }
+
+    private val historyLayout: View by lazy {
+        findViewById(R.id.historyLayout)
+    }
+
+    private val historyLinearLayout: View by lazy {
+        findViewById(R.id.historyLinearLayout)
     }
 
     private var isOperator = false
@@ -148,7 +157,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun historyButtonClicked(v: View) {
+        historyLayout.isVisible = true
+    }
 
+    fun historyClearButtonClicked(v: View) {
+
+    }
+
+    fun closeHistoryButtonClicked(v: View) {
+        historyLayout.isVisible = false
     }
 }
 
