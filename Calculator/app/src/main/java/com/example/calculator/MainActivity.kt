@@ -187,7 +187,7 @@ class MainActivity : AppCompatActivity() {
                     historyLinearLayout.addView(historyView)
                 }
             }
-        })
+        }).start()
 
     }
 
