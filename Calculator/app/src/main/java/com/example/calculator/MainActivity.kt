@@ -6,9 +6,12 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.room.Room
+import com.example.calculator.model.History
 import java.lang.NumberFormatException
 import java.lang.RuntimeException
 import kotlin.math.exp
@@ -26,9 +29,11 @@ class MainActivity : AppCompatActivity() {
         findViewById(R.id.historyLayout)
     }
 
-    private val historyLinearLayout: View by lazy {
+    private val historyLinearLayout: LinearLayout by lazy {
         findViewById(R.id.historyLinearLayout)
     }
+
+    lateinit var db: AppDatabase
 
     private var isOperator = false
     private var hasOperator = false
@@ -36,6 +41,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "historyDB"
+        ).build()
     }
 
     fun buttonClicked(v: View) {
@@ -128,6 +139,11 @@ class MainActivity : AppCompatActivity() {
         }
         val expressionText = expressionTextView.text.toString()
         val resultText = calculateExpression()
+
+        Thread(Runnable {
+            db.historyDao().insertHistory(History(null, expressionText, resultText))
+        }).start()
+
         resultTextView.text = ""
         expressionTextView.text = resultText
         isOperator = false
@@ -158,6 +174,12 @@ class MainActivity : AppCompatActivity() {
 
     fun historyButtonClicked(v: View) {
         historyLayout.isVisible = true
+        historyLinearLayout.removeAllViews() // 결과값을 표시하기 전 기존에 아이템들을 모두 삭제
+
+        Thread(Runnable {
+            db.historyDao().getAll().reversed()
+        })
+
     }
 
     fun historyClearButtonClicked(v: View) {
