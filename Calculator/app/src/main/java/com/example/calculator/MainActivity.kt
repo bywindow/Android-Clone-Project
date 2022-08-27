@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -177,13 +178,24 @@ class MainActivity : AppCompatActivity() {
         historyLinearLayout.removeAllViews() // 결과값을 표시하기 전 기존에 아이템들을 모두 삭제
 
         Thread(Runnable {
-            db.historyDao().getAll().reversed()
+            db.historyDao().getAll().reversed().forEach {
+                runOnUiThread {
+                    val historyView = LayoutInflater.from(this).inflate(R.layout.history_row, null, false)
+                    historyView.findViewById<TextView>(R.id.expressionTextView).text = it.expression
+                    historyView.findViewById<TextView>(R.id.resultTextView).text = "= ${it.result}"
+
+                    historyLinearLayout.addView(historyView)
+                }
+            }
         })
 
     }
 
     fun historyClearButtonClicked(v: View) {
-
+        historyLinearLayout.removeAllViews()
+        Thread(Runnable {
+            db.historyDao().deleteAll()
+        }).start()
     }
 
     fun closeHistoryButtonClicked(v: View) {
