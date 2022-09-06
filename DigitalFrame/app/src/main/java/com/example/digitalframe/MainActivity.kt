@@ -41,6 +41,41 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initAddPhotoButton()
+        initStartPhotoFrameButton()
+    }
+
+    private fun initAddPhotoButton() {
+        addPhotoButton.setOnClickListener {
+            when {
+                ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    // 권한이 승인되어 있는 경우 : 정상적으로 사진 추가 기능 실행
+                    navigateToPhotos()
+                }
+                shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE) -> {
+                    // Educated 화면을 보여준 후 권한 요청
+                    showPermissionContextPopup()
+                }
+                else -> {
+                    //Permissions : 권한에 필요한 것들을 배열로 받아서 한번에 요청
+                    requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 1000)
+                }
+            }
+        }
+    }
+
+    private fun initStartPhotoFrameButton() {
+        startPhotoFrameButton.setOnClickListener {
+            // 두번째 액티비티로 넘어갈 intent 선언
+            val intent = Intent(this, PhotoFrameActivity::class.java)
+            imageUriList.forEachIndexed { index, uri ->
+                intent.putExtra("photo$index", uri.toString())
+            }
+            intent.putExtra("photoListSize", imageUriList.size)
+            startActivity(intent)
+        }
     }
 
     // 권한 요청에 대한 응답을 콜백으로 받아오는 함수
@@ -64,6 +99,26 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    // 기기저장소에 저장된 이미지 파일을 불러온다
+    private fun navigateToPhotos() {
+        // TODO : Deprecated
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        startActivityForResult(intent, 2000)
+    }
+
+    private fun showPermissionContextPopup() {
+        AlertDialog.Builder(this)
+            .setTitle("권한 요청")
+            .setMessage("전자액자에 사진을 추가하기 위해 권한 요청에 동의해주세요.")
+            .setPositiveButton("확인") { _, _ ->
+                requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 1000)
+            }
+            .setNegativeButton("취소") { _, _ -> }
+            .create()
+            .show()
     }
 
     // 사진 선택 후 결과값을 받아온다
@@ -92,47 +147,5 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    private fun initAddPhotoButton() {
-        addPhotoButton.setOnClickListener {
-            when {
-                ContextCompat.checkSelfPermission(
-                    this,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED -> {
-                    // 권한이 승인되어 있는 경우 : 정상적으로 사진 추가 기능 실행
-                    navigateToPhotos()
-                }
-                shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-                    // Educated 화면을 보여준 후 권한 요청
-                    showPermissionContextPopup()
-                }
-                else -> {
-                    //Permissions : 권한에 필요한 것들을 배열로 받아서 한번에 요청
-                    requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 1000)
-                }
-            }
-        }
-    }
-
-    private fun showPermissionContextPopup() {
-        AlertDialog.Builder(this)
-            .setTitle("권한 요청")
-            .setMessage("전자액자에 사진을 추가하기 위해 권한 요청에 동의해주세요.")
-            .setPositiveButton("확인") { _, _ ->
-                requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 1000)
-            }
-            .setNegativeButton("취소") { _, _ -> }
-            .create()
-            .show()
-    }
-
-    // 기기저장소에 저장된 이미지 파일을 불러온다
-    private fun navigateToPhotos() {
-        // TODO : Deprecated
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/*"
-        startActivityForResult(intent, 2000)
     }
 }
