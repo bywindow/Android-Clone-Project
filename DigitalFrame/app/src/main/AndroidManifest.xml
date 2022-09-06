@@ -26,7 +26,7 @@
         </activity>
         <activity
             android:name=".PhotoFrameActivity"
-            android:exported="false" />
+            android:exported="false"/>
     </application>
 
 </manifest>
