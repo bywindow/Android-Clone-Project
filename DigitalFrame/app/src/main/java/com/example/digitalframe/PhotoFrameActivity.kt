@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.*
 import kotlin.concurrent.timer
 
 class PhotoFrameActivity : AppCompatActivity() {
@@ -14,6 +15,8 @@ class PhotoFrameActivity : AppCompatActivity() {
     private val photoList = mutableListOf<Uri>()
 
     private var currentPosition = 0;
+
+    private var timer: Timer? = null
 
     private val foregroundImageView : ImageView by lazy {
         findViewById(R.id.foregroundImageView)
@@ -28,7 +31,6 @@ class PhotoFrameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_photo_frame)
 
         getPhotoUri()
-        startTimer()
     }
 
     private fun getPhotoUri() {
@@ -42,7 +44,7 @@ class PhotoFrameActivity : AppCompatActivity() {
     }
 
     private fun startTimer() {
-        timer(period = 5 * 1000) {
+        timer = timer(period = 5 * 1000) {
             // main thread 에서 동작하지 않으므로 따로 설정해준다.
             runOnUiThread {
                 val current = currentPosition
@@ -59,5 +61,26 @@ class PhotoFrameActivity : AppCompatActivity() {
                 currentPosition = next
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        timer?.cancel()
+    }
+
+    /**
+     * 기존 onCreate 내에 있던 startTimer 함수를 onStart 내부로 이동
+     * onCreate 내부에 있다면, 액티비티가 시작될 때 한번만 실행됨
+     * onStart 내부에 있도록 하여 Stop 후 다시 액티비티로 돌아왔을 때도 실행되도록
+     */
+    override fun onStart() {
+        super.onStart()
+        startTimer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer?.cancel()
+        timer?.purge()
     }
 }
