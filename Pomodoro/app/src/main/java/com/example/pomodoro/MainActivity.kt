@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateRemainTime(remainMillis: Long) {
         val remainSecond = remainMillis / 1000 // 전체 남은 시간을 초로 나타낸 것
 
-        remainMinuteTextView.text = "%02d".format(remainSecond / 60)
+        remainMinuteTextView.text = "%02d'".format(remainSecond / 60)
         remainSecondTextView.text = "%02d".format(remainSecond % 60 ) // 60으로 나눈 나머지가 실제 초에 나타낼 수가 됨
     }
 
