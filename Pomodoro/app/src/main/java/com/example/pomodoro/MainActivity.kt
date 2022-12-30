@@ -45,16 +45,17 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                    //카운터 작동 중에 재조작 시 기존 카운터를 멈춰줘야 함
-                    currentCountDownTimer?.cancel()
-                    currentCountDownTimer = null
+                    stopCountDown()
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
                     seekBar ?: return
-                    startCountDown(seekBar)
+                    if (seekBar.progress == 0) {
+                        stopCountDown()
+                    } else {
+                        startCountDown(seekBar)
+                    }
                 }
-
             }
         )
     }
@@ -80,6 +81,13 @@ class MainActivity : AppCompatActivity() {
         bellSoundId?.let {
             soundPool.play(it, 1f, 1f, 0, 0, 1f)
         }
+    }
+
+    private fun stopCountDown() {
+        //카운터 작동 중에 재조작 시 기존 카운터를 멈춰줘야 함
+        currentCountDownTimer?.cancel()
+        currentCountDownTimer = null
+        soundPool.autoPause()
     }
 
     private fun startCountDown(seekBar: SeekBar){
