@@ -36,7 +36,13 @@ class SoundVisualizerView(context: Context, attrs: AttributeSet? = null) : View(
             if(offsetX < 0) return@forEach
 
             // amplitude 그리기
-
+            canvas.drawLine(
+                offsetX,
+                centerY - lineLength / 2f,
+                offsetX,
+                centerY + lineLength / 2f,
+                amplitudePaint
+            )
         }
 
     }
