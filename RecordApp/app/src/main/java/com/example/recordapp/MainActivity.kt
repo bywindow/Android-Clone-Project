@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
             prepare()
         }
         recorder?.start()
-        soundVisualizerView.startVisualizing()
+        soundVisualizerView.startVisualizing(false)
         state = State.ON_RECORDING
     }
 
@@ -126,12 +126,14 @@ class MainActivity : AppCompatActivity() {
             prepare()
         }
         player?.start()
+        soundVisualizerView.startVisualizing(true)
         state = State.ON_PLAYING
     }
 
     private fun stopPlaying() {
         player?.release()
         player = null
+        soundVisualizerView.stopVisualizing()
         state = State.AFTER_RECORDING
     }
 

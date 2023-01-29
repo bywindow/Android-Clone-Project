@@ -18,13 +18,21 @@ class SoundVisualizerView(context: Context, attrs: AttributeSet? = null) : View(
     private var drawingWidth: Int = 0
     private var drawingHeight: Int = 0
     private var drawingAmplitudes: List<Int> = emptyList()
+    private var isReplaying: Boolean = false
+    private var replayingPosition: Int = 0
 
     private val visualizeRepeatAction: Runnable = object : Runnable {
         override fun run() {
-            // amplitude를 먼저 가져온 다음에 그린다
-            val currentAmplitude = onRequestCurrentAmplitude?.invoke() ?: 0 // activity에서 정의한 블럭 호출하고 내부 값을 반환
-            drawingAmplitudes = listOf(currentAmplitude) + drawingAmplitudes
+            if(!isReplaying) {
+                // amplitude를 먼저 가져온 다음에 그린다
+                val currentAmplitude = onRequestCurrentAmplitude?.invoke() ?: 0 // activity에서 정의한 블럭 호출하고 내부 값을 반환
+                drawingAmplitudes = listOf(currentAmplitude) + drawingAmplitudes
+            } else {
+                replayingPosition++
+            }
+
             invalidate() // 데이터가 추가되었을 때 onDraw를 다시 호출하고 뷰를 갱신한다
+
             handler?.postDelayed(this, ACTION_INTERVAL) // 특정 시간이 지난 뒤 다시 실행
         }
 
@@ -44,7 +52,15 @@ class SoundVisualizerView(context: Context, attrs: AttributeSet? = null) : View(
         val centerY = drawingHeight / 2f
         var offsetX = drawingWidth.toFloat()
 
-        drawingAmplitudes.forEach { amplitude ->
+        drawingAmplitudes
+            .let { amplitudes ->
+                if(isReplaying) {
+                    amplitudes.takeLast(replayingPosition) // takeLast : 가장 뒤에 있는 값부터 순서대로 가져옴
+                } else {
+                    amplitudes
+                }
+            }
+            .forEach { amplitude ->
             val lineLength = amplitude / MAX_AMPLITUDE * drawingHeight * 0.8f
             offsetX -= LINE_SPACE
             if(offsetX < 0) return@forEach
@@ -60,7 +76,8 @@ class SoundVisualizerView(context: Context, attrs: AttributeSet? = null) : View(
         }
     }
 
-    fun startVisualizing() {
+    fun startVisualizing(isReplaying: Boolean) {
+        this.isReplaying = isReplaying
         handler?.post(visualizeRepeatAction)
     }
 
