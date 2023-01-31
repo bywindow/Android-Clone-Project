@@ -77,6 +77,8 @@ class MainActivity : AppCompatActivity() {
         }
         resetButton.setOnClickListener {
             stopPlaying()
+            soundVisualizerView.clearVisualization()
+            recordTimeView.clearCountTime()
             state = State.BEFORE_RECORDING
         }
         recordButton.setOnClickListener {
@@ -131,6 +133,11 @@ class MainActivity : AppCompatActivity() {
             setDataSource(recordingFilePath)
             prepare()
         }
+        // 녹음된 파일의 재생이 끝났을 때 처리
+        player?.setOnCompletionListener {
+            stopPlaying()
+            state = State.AFTER_RECORDING
+        }
         player?.start()
         soundVisualizerView.startVisualizing(true)
         recordTimeView.startCountUp()
@@ -141,6 +148,7 @@ class MainActivity : AppCompatActivity() {
         player?.release()
         player = null
         soundVisualizerView.stopVisualizing()
+        recordTimeView.stopCountUp()
         state = State.AFTER_RECORDING
     }
 
